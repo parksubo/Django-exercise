@@ -1,9 +1,29 @@
 <h1>{{ question.question_text }}</h1>
-<ul> 
+
 <!-- question에 있는 모든 choice의 집합을 반환하는 코드-->
+<!--
+<ul> 
 {% for choice in question.choice_set.all %}
     <li>{{ choice.choice_text }}</li>
 {% endfor %}
 </ul>
+-->
 
+<!-- 질문 선택에 대한 라디오 버튼을 표시-->
+<form action="{% url 'polls:vote' question.id %}" method="post">
+    <!-- csrf_token 코드는
+        Cross Site Request Forgeries(사용자와 서버사이의 데이터를 해커가 임의로 변경하는 행위)를 방지함
+        <form> 태그를 작성할때 마다 넣어주기
+    -->
+    {% csrf_token %}
+    <fieldset>
+        <legend><h1>{{ question.question_text }}</h1></legend>
+        {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+        {% for choice in question.choice_set.all %}
+            <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+            <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+        {% endfor %}
+    </fieldset>
+    <input type="submit" value="Vote">
+    </form>
 
