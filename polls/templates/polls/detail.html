@@ -1,0 +1,9 @@
+<h1>{{ question.question_text }}</h1>
+<ul> 
+<!-- question에 있는 모든 choice의 집합을 반환하는 코드-->
+{% for choice in question.choice_set.all %}
+    <li>{{ choice.choice_text }}</li>
+{% endfor %}
+</ul>
+
+
